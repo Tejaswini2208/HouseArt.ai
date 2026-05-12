@@ -1,0 +1,14 @@
+{
+  "name": "HomeArt - AI Interior Design Inspiration",
+  "description": "A premium, multilingual AI-powered interior design platform featuring house ideas, room analysis, and local discovery.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "AI Room Analysis",
+    "Multilingual Support",
+    "Local Shop Discovery",
+    "Interactive Design Chatbot"
+  ]
+}

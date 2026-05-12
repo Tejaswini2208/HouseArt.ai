@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-orange: #f97316;
+  --color-brand-amber: #fcd34d;
+  --color-bg-deep: #080808;
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-deep text-white antialiased;
+  }
+}
+
+.bg-orange-gradient {
+  background: linear-gradient(to top right, var(--color-brand-orange), var(--color-brand-amber));
+}
+
+.text-orange-gradient {
+  @apply bg-gradient-to-tr from-orange-500 to-amber-300 bg-clip-text text-transparent;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s infinite ease-in-out;
+}

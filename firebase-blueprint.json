@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "savedDesigns": {
+      "title": "Saved Designs",
+      "description": "User's bookmarked interior designs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "imageUrl", "title"]
+    },
+    "userUploads": {
+      "title": "User Uploads",
+      "description": "Images uploaded by user for AI analysis",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "analysis": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "imageUrl"]
+    }
+  },
+  "firestore": {
+    "savedDesigns": {
+      "schema": "savedDesigns",
+      "description": "Collection of designs users have saved to their profile"
+    },
+    "userUploads": {
+      "schema": "userUploads",
+      "description": "Collection of room images uploaded for analysis"
+    }
+  }
+}
