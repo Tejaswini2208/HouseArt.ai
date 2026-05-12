@@ -19,7 +19,7 @@ export interface PexelsImage {
   tag?: string;
 }
 
-const PEXELS_API_KEY = "Ja3kxngrQmFQRNHIiYQqtLZEFCMQD40aEIRmkaTE41nibbLkGFzKliPl";
+const PEXELS_API_KEY = "PCFzYfyNbAxGXLXmkHanwYoc7w8DJXwSujxs8CWK6xctVujCM0ou00OB";
 
 const SEARCH_MAPPINGS: Record<string, string> = {
   'indian-traditional': 'Indian traditional house home heritage',

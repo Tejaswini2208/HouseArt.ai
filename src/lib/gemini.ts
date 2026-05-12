@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.GEMINI_API_KEY!;
+// For deployment verification, we are temporarily hardcoding the key.
+const apiKey = "AIzaSyDgv4q5Gu8_UF01El5Y92I0n-iGGAWoohc";
 export const ai = new GoogleGenAI({ apiKey });
 
 export const MODELS = {
