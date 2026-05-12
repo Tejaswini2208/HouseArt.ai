@@ -3,12 +3,11 @@ import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
 import CategoryBar from './components/CategoryBar';
 import MasonryGrid from './components/MasonryGrid';
-import FloatingChatbot from './components/FloatingChatbot';
-import RoomAnalyzer from './components/RoomAnalyzer';
 import ProfilePage from './components/ProfilePage';
 import ProfessionalFinder from './components/ProfessionalFinder';
 import BottomNav from './components/BottomNav';
 import LoginForm from './components/LoginForm';
+import VideoGallery from './components/VideoGallery';
 import { fetchInteriorImages, fetchTrendingImages, PexelsImage } from './services/pexelsService';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, TrendingUp, Info, Loader2 } from 'lucide-react';
@@ -18,7 +17,7 @@ import { useAuth } from './lib/AuthContext';
 export default function App() {
   const { t } = useTranslation();
   const { user, loading } = useAuth();
-  const [view, setView] = React.useState<'feed' | 'profile'>('feed');
+  const [view, setView] = React.useState<'feed' | 'videos' | 'profile'>('feed');
   const [images, setImages] = React.useState<PexelsImage[]>([]);
   const [selectedCategory, setSelectedCategory] = React.useState('indian-traditional');
   const [isLoading, setIsLoading] = React.useState(true);
@@ -71,11 +70,15 @@ export default function App() {
     setSearchQuery(query);
     setPage(1);
     setHasMore(true);
-    if (query) {
-      loadImages(query, 1, false);
-    } else {
-      loadImages(selectedCategory, 1, false);
+    
+    if (view === 'feed') {
+      if (query) {
+        loadImages(query, 1, false);
+      } else {
+        loadImages(selectedCategory, 1, false);
+      }
     }
+    // VideoGallery reacts to searchQuery change via useEffect
   };
 
   React.useEffect(() => {
@@ -112,7 +115,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-bg-deep font-sans selection:bg-orange-500 selection:text-black">
-      <Navbar onSearch={handleSearch} onProfileClick={() => setView('profile')} />
+      <Navbar 
+        currentView={view}
+        onViewChange={setView}
+        onSearch={handleSearch} 
+      />
       
       <main className="pb-32 md:pb-20">
         <AnimatePresence mode="wait">
@@ -170,19 +177,6 @@ export default function App() {
                   <ProfessionalFinder />
                 </div>
 
-                {/* AI Analyzer Section - Moved up */}
-                <div className="px-4 md:px-8 py-12 md:py-16">
-                  <div className="flex flex-col md:flex-row items-center gap-8 mb-8 md:mb-12">
-                    <div className="flex-1 h-px bg-white/10 w-full" />
-                    <div className="text-center px-6">
-                      <p className="text-[10px] font-black text-orange-400 uppercase tracking-[0.4em] mb-2">Next Generation Design</p>
-                      <h3 className="text-2xl md:text-3xl font-black tracking-tighter uppercase italic">Want a digital design first?</h3>
-                    </div>
-                    <div className="flex-1 h-px bg-white/10 w-full" />
-                  </div>
-                  <RoomAnalyzer />
-                </div>
-
                 {/* Grid or Loader */}
                 <div className="mt-8">
                   {isLoading ? (
@@ -220,6 +214,20 @@ export default function App() {
                 </div>
               </div>
             </motion.div>
+          ) : view === 'videos' ? (
+            <motion.div
+              key="videos"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <VideoGallery 
+                selectedCategory={selectedCategory}
+                onCategorySelect={(id) => { setSelectedCategory(id); setSearchQuery(''); }}
+                searchQuery={searchQuery}
+              />
+            </motion.div>
           ) : (
             <motion.div
               key="profile"
@@ -235,7 +243,6 @@ export default function App() {
       </main>
 
       <BottomNav currentView={view} onViewChange={(v) => setView(v)} />
-      <FloatingChatbot />
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-24 px-4 md:px-8 bg-black/40 backdrop-blur-3xl">
@@ -266,7 +273,6 @@ export default function App() {
               <h4 className="font-black text-[10px] mb-8 uppercase tracking-[0.3em] text-white/20">Experience</h4>
               <ul className="space-y-4 text-xs font-bold text-white/50 tracking-wider">
                 <li><a href="#" className="hover:text-orange-400 transition-colors uppercase">Visionary Feed</a></li>
-                <li><a href="#" className="hover:text-orange-400 transition-colors uppercase">Room Analysis</a></li>
               </ul>
             </div>
             <div>

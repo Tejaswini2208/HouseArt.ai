@@ -1,16 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Search, Menu, User, Globe, LogOut, X, TrendingUp, Sparkles } from 'lucide-react';
+import { Search, Menu, User, Globe, LogOut, X, TrendingUp, Sparkles, Home, Play } from 'lucide-react';
 import { LANGUAGES } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../lib/AuthContext';
 
 interface NavbarProps {
+  currentView: 'feed' | 'videos' | 'profile';
+  onViewChange: (view: 'feed' | 'videos' | 'profile') => void;
   onSearch: (query: string) => void;
-  onProfileClick: () => void;
 }
 
-export default function Navbar({ onSearch, onProfileClick }: NavbarProps) {
+export default function Navbar({ currentView, onViewChange, onSearch }: NavbarProps) {
   const { t, i18n } = useTranslation();
   const { user, signIn, logout } = useAuth();
   const [isLangOpen, setIsLangOpen] = React.useState(false);
@@ -34,7 +35,7 @@ export default function Navbar({ onSearch, onProfileClick }: NavbarProps) {
 
   const handleProfileClick = () => {
     setIsUserOpen(false);
-    onProfileClick();
+    onViewChange('profile');
   };
 
   return (
@@ -121,10 +122,32 @@ export default function Navbar({ onSearch, onProfileClick }: NavbarProps) {
           <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-gradient rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20">
             <span className="text-black font-bold text-lg md:text-xl">H</span>
           </div>
-          <h1 className="text-xl md:text-2xl font-bold tracking-tighter hidden sm:block">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tighter hidden lg:block">
             HomeArt AI
             <span className="text-[10px] font-light text-orange-400 uppercase tracking-widest ml-1 bg-white/5 px-1 py-0.5 rounded">PRO</span>
           </h1>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6 px-6 border-l border-white/5 mx-4">
+          <button 
+            onClick={() => onViewChange('feed')}
+            className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
+              currentView === 'feed' ? 'text-orange-400' : 'text-white/40 hover:text-white'
+            }`}
+          >
+            <Home className="w-4 h-4" />
+            Home
+          </button>
+          <button 
+            onClick={() => onViewChange('videos')}
+            className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
+              currentView === 'videos' ? 'text-orange-400' : 'text-white/40 hover:text-white'
+            }`}
+          >
+            <Play className="w-4 h-4 fill-current" />
+            Videos
+          </button>
         </div>
 
         {/* Search Bar */}

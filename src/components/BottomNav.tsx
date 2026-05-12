@@ -1,10 +1,10 @@
 import React from 'react';
-import { Home, User, Compass, Sparkles } from 'lucide-react';
+import { Home, User, Compass, Sparkles, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface BottomNavProps {
-  currentView: 'feed' | 'profile';
-  onViewChange: (view: 'feed' | 'profile') => void;
+  currentView: 'feed' | 'videos' | 'profile';
+  onViewChange: (view: 'feed' | 'videos' | 'profile') => void;
 }
 
 export default function BottomNav({ currentView, onViewChange }: BottomNavProps) {
@@ -19,6 +19,16 @@ export default function BottomNav({ currentView, onViewChange }: BottomNavProps)
         >
           <Home className="w-5 h-5" />
           <span className="text-[10px] font-black uppercase tracking-widest">Home</span>
+        </button>
+
+        <button
+          onClick={() => onViewChange('videos')}
+          className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition-all ${
+            currentView === 'videos' ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/20' : 'text-white/40 hover:text-white'
+          }`}
+        >
+          <Play className="w-5 h-5" />
+          <span className="text-[10px] font-black uppercase tracking-widest">Videos</span>
         </button>
         
         <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-orange-400">
